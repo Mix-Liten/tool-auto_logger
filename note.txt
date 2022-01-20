@@ -3,3 +3,10 @@
 
 start /B logger.exe > log.txt
 
+
+印出 log.txt
+可選，type 是一次全印，more 預設顯示屏幕高度並往下捲動
+
+type log.txt
+more log.txt
+
