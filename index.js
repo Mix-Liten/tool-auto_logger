@@ -10,7 +10,7 @@ require("dotenv").config({ path: dotenvAbsolutePath });
 const config = {
   userid: process.env.userid,
   password: process.env.password,
-  url: "https://hrms.eztravel.com.tw/SCSWeb/Login.aspx",
+  url: process.env.url,
   breakDay: ["日", "土"],
 };
 

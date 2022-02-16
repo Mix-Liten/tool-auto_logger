@@ -33,7 +33,6 @@ async function checkSchedule(dayStr) {
     process.env.GOOGLE_PRIVATE_KEY,
     process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL
   );
-  console.log(res);
   const inScheduleConfig = res.find((arrangement) => arrangement[0] === dayStr);
   if (inScheduleConfig) return [true, !!inScheduleConfig[1]];
   return [false];

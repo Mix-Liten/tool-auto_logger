@@ -22,9 +22,9 @@ async function diffAction(fn = () => {}) {
   // 單位從分鐘轉換為秒
   const diffTime = (preDiff + randomSeed + type * diff) * 6e4;
 
-  if (diff > 0) {
-    console.log(`--系統時間比實際時間 ${type > 0 ? "快" : "慢"} ${diff}分鐘--`);
-  }
+  // if (diff > 0) {
+  //   console.log(`--系統時間比實際時間 ${type > 0 ? "快" : "慢"} ${diff}分鐘--`);
+  // }
 
   setTimeout(() => {
     fn();
