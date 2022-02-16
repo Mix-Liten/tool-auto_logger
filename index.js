@@ -1,6 +1,9 @@
 const path = require("path");
 const cron = require("node-cron");
 const browserLauncher = require("./utils/browserLauncher.js");
+const systemDiffTimeout = require("./utils/systemDiffTimeout");
+const formatDate = require("./utils/formatDate");
+const { checkSchedule } = require("./utils/googleSheet");
 const dotenvAbsolutePath = path.join(__dirname, "./.env");
 require("dotenv").config({ path: dotenvAbsolutePath });
 
@@ -8,32 +11,8 @@ const config = {
   userid: process.env.userid,
   password: process.env.password,
   url: "https://hrms.eztravel.com.tw/SCSWeb/Login.aspx",
+  breakDay: ["日", "土"],
 };
-
-function formatDate(type) {
-  const date = new Date();
-
-  const yyyy = date.getFullYear();
-  const MM = String(date.getMonth() + 1).padStart(2, "0"); // month is zero-based
-  const dd = String(date.getDate()).padStart(2, "0");
-  const HH = String(date.getHours()).padStart(2, "0");
-  const mm = String(date.getMinutes()).padStart(2, "0");
-  const ss = String(date.getSeconds()).padStart(2, "0");
-  const DD = ["日", "月", "火", "水", "木", "金", "土"][date.getDay()];
-
-  const formatDay = `${yyyy}/${MM}/${dd} (${DD})`;
-  const formatTime = `${HH}:${mm}:${ss}`;
-  const formatFull = `${formatDay} ${formatTime}`;
-  switch (type) {
-    case "day":
-      return formatDay;
-    case "time":
-      return formatTime;
-    case "full":
-    default:
-      return formatFull;
-  }
-}
 
 const run = async (isOn) => {
   if (isOn) {
@@ -96,14 +75,48 @@ const run = async (isOn) => {
   }
 };
 
-cron.schedule("45 07 * * 1-5", () => {
-  // console.log("start check on!");
-  run(true);
-});
+// 排程格式參考
+// https://www.npmjs.com/package/cron#cron-ranges
 
-cron.schedule("00 17 * * 1-5", () => {
-  // console.log("start check off!");
-  run(false);
-});
+// cron.schedule("45 07 * * 1-5", () => {
+//   run(true);
+// });
+
+// cron.schedule("05 17 * * 1-5", () => {
+//   run(false);
+// });
+
+const setCronHourAndMinute = (hour, minute) => {
+  const [oriHour, oriMinute] = [
+    parseInt(minute) - 30 > 0 ? parseInt(hour) : parseInt(hour) - 1,
+    parseInt(minute) - 30 > 0 ? parseInt(minute) - 30 : parseInt(minute) + 30,
+  ];
+  const newMinute = oriMinute.toString().padStart(2, "0");
+  const newHour = oriHour.toString().padStart(2, "0");
+
+  return `${newMinute} ${newHour}`;
+};
+
+cron.schedule(
+  `${setCronHourAndMinute(process.env.onHour, process.env.onMinute)} * * 1-6`,
+  async () => {
+    const today = formatDate("pureDay");
+    const [isInSchedule, shouldWork] = await checkSchedule(today);
+    const isBreakDay = config.breakDay.includes(formatDate("star"));
+    if ((isInSchedule && !shouldWork) || (!isInSchedule && isBreakDay)) return;
+    systemDiffTimeout(() => run(true));
+  }
+);
+
+cron.schedule(
+  `${setCronHourAndMinute(process.env.offHour, process.env.offMinute)} * * 1-6`,
+  async () => {
+    const today = formatDate("pureDay");
+    const [isInSchedule, shouldWork] = await checkSchedule(today);
+    const isBreakDay = config.breakDay.includes(formatDate("star"));
+    if ((isInSchedule && !shouldWork) || (!isInSchedule && isBreakDay)) return;
+    systemDiffTimeout(() => run(false));
+  }
+);
 
 console.log("Auto logger start...");

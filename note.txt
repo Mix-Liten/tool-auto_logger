@@ -1,7 +1,7 @@
 背景運行，但是會綁定使用指令的命令視窗
 可選，後面的 log 紀錄，一個大於符號(>)會覆蓋舊檔，兩個(>>)則是插入後方
 
-start /B logger.exe > log.txt
+start /B logger.exe >> log.txt
 
 
 印出 log.txt
