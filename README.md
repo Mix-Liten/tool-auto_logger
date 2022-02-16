@@ -16,8 +16,8 @@
      - offMinute 下班時間之`分數位`
 
 3. 可選，使用 Google Sheet 排定以`日期為單位`的班表，`若無使用則預設週一到週五打上下班卡`
-     1. 登入 google 帳號，[建立新表單](https://sheets.new/)
-     2. 依照[`教學`](https://ithelp.ithome.com.tw/articles/10234325)建立憑證並下載，以及將前步驟表單與服務帳戶共享
+     1. 登入 google 帳號，[範例表單](https://docs.google.com/spreadsheets/d/16ZvIga5xAgOxhkPecJVzg8Ekcc30VsOc4ZbVSbadlXA/edit?usp=sharing)，建立副本到自己帳號下的雲端硬碟，沿用原格式並調整成當前月份排班表，**排班**`欄位只要有字即為需上班日`
+     2. 依照[教學](https://ithelp.ithome.com.tw/articles/10234325)建立憑證並下載，以及將前步驟表單與服務帳戶共享
      3. 回到 `.env` 填寫如下變數
           - docID 表單網址中間的亂數ID，ex: `https://.../spreadsheets/d/<docID>/edit`
           - GOOGLE_SERVICE_ACCOUNT_EMAIL 下載下來憑證中的 `client_email`
