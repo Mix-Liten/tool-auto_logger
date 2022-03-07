@@ -2,6 +2,12 @@ const browserLauncher = require("./utils/browserLauncher.js");
 const formatDate = require("./utils/formatDate");
 
 const main = async (isOn, config, options) => {
+  if (options?.retryTime && options?.retryTime > 3) {
+    console.log(
+      "Is already retry three time. The tool may breaked, please connect author or create an issue."
+    );
+    return;
+  }
   if (isOn && !options?.isRetry) {
     console.log(`-------${formatDate("day")}-------`);
   }
@@ -27,8 +33,10 @@ const main = async (isOn, config, options) => {
 
     await page.type(loginDom.userid, config.userid);
     await page.type(loginDom.password, config.password);
-    await page.click(loginDom.submitBtn);
-    await page.waitForNavigation();
+    await Promise.all([
+      page.waitForNavigation(),
+      await page.click(loginDom.submitBtn),
+    ]);
 
     const listFrameEleHandle = await page.waitForSelector(checkerDom.listFrame);
     const listFrameEle = await listFrameEleHandle.contentFrame();
@@ -53,7 +61,10 @@ const main = async (isOn, config, options) => {
     console.log("error", error);
     await browser.close();
     setTimeout(() => {
-      main(isOn, config, { isRetry: true });
+      main(isOn, config, {
+        isRetry: true,
+        retryTime: (options?.retryTime || 0) + 1,
+      });
     }, 1000);
   }
 };
