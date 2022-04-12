@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "build": "pkg index.js --public --targets node14-win-x64 --output dist/logger",
+    "build_win": "pkg index.js --public --targets node14-win-x64 --output dist/logger",
+    "build_mac": "pkg index.js --public --targets node14-macos-x64 --output dist/logger",
     "postbuild": "cp -R node_modules/puppeteer/.local-chromium dist/.local-chromium"
   },
   "keywords": [],

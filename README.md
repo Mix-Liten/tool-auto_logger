@@ -23,22 +23,23 @@
           - GOOGLE_SERVICE_ACCOUNT_EMAIL 下載下來憑證中的 `client_email`
           - GOOGLE_PRIVATE_KEY 下載下來憑證中的 `private_key`
 
-4. 建置執行檔，`npm run build`，cd 進 /dist 資料夾並參閱下一段落 
+4. 建置執行檔，`npm run build_<win/mac>`，cd 進 /dist 資料夾並參閱下一段落 
 
 ### 執行檔的使用方式
-1. 背景運行，但是會綁定使用指令的命令視窗
-可選，後面的 log 紀錄，一個大於符號(>)會覆蓋舊檔，兩個(>>)則是插入後方
+1. 運行
+     - 可選，`/B`，背景運行，但是會綁定使用指令的命令視窗
+     - 可選，執行後的 log 紀錄，一個大於符號(>)會覆蓋舊檔，兩個(>>)則是插入後方
 
     ```bash
+    start logger.exe
     start /B logger.exe >> log.txt
     ```
 
-
 2. 印出 log.txt
-可選，type 是一次全印，more 預設顯示屏幕高度並往下捲動
+     - 可選，type 是一次全印，more 預設顯示屏幕高度並往下捲動
 
     ```bash
-    type log.txt
-    more log.txt
+     type log.txt
+     more log.txt
     ```
 
