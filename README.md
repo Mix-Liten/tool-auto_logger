@@ -23,7 +23,7 @@
           - GOOGLE_SERVICE_ACCOUNT_EMAIL 下載下來憑證中的 `client_email`
           - GOOGLE_PRIVATE_KEY 下載下來憑證中的 `private_key`
 
-4. 建置執行檔，`npm run build_<win/mac>`，cd 進 /dist 資料夾並參閱下一段落 
+4. 建置執行檔，`npm run build`，cd 進 /dist 資料夾並參閱下一段落 
 
 ### 執行檔的使用方式
 1. 運行
