@@ -1,4 +1,5 @@
 const { GoogleSpreadsheet } = require("google-spreadsheet");
+const { log } = require("./logTool");
 
 // https://ithelp.ithome.com.tw/articles/10234325
 // https://www.npmjs.com/package/google-spreadsheet
@@ -22,7 +23,7 @@ async function getSchedule(docID, private_key, client_email) {
       result.push(row._rawData);
     }
   } catch (error) {
-    // console.log("error", error);
+    log("GoogleSpreadsheet error: ", error);
   }
   return result;
 }

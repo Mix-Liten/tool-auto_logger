@@ -4,6 +4,7 @@ const mainAPP = require("./main");
 const systemDiffTimeout = require("./utils/systemDiffTimeout");
 const formatDate = require("./utils/formatDate");
 const { checkSchedule } = require("./utils/googleSheet");
+const { log } = require("./utils/logTool");
 const dotenvAbsolutePath = path.join(__dirname, "./.env");
 require("dotenv").config({ path: dotenvAbsolutePath });
 
@@ -50,4 +51,4 @@ cron.schedule(
   }
 );
 
-console.log("Auto logger start...");
+log("Auto logger start...");
