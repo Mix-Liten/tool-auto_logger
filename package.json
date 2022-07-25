@@ -13,14 +13,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.26.0",
-    "dotenv": "^14.3.2",
-    "google-spreadsheet": "^3.2.0",
-    "node-cron": "^3.0.0",
-    "puppeteer": "^13.3.2"
+    "axios": "^0.27.2",
+    "dotenv": "^16.0.1",
+    "google-spreadsheet": "^3.3.0",
+    "node-cron": "^3.0.1",
+    "puppeteer": "^15.5.0"
   },
   "devDependencies": {
-    "pkg": "^5.5.2"
+    "pkg": "^5.8.0"
   },
   "pkg": {
     "scripts": "node_modules/puppeteer/lib/*.js"
